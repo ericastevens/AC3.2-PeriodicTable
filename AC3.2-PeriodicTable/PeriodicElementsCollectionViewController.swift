@@ -79,7 +79,7 @@ class PeriodicElementsCollectionViewController: UICollectionViewController, NSFe
         let request = NSFetchRequest<Element>(entityName: "Element")
         
         let sectionSort = NSSortDescriptor(key: "group", ascending: true)
-        let numberSort = NSSortDescriptor(key: "number", ascending: false)
+        let numberSort = NSSortDescriptor(key: "number", ascending: true)
         request.sortDescriptors = [sectionSort, numberSort]
         fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "group", cacheName: nil)
         fetchedResultsController.delegate = self
@@ -115,10 +115,11 @@ class PeriodicElementsCollectionViewController: UICollectionViewController, NSFe
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ElementCollectionViewCell
         
         let source = fetchedResultsController.object(at: indexPath)
-        if let name = source.name {
-        cell.elementView.elementSymbol.text = "\(name)"
+        if let symbol = source.symbol {
+                cell.elementView.elementSymbol.text = "\(symbol)"
+                cell.elementView.elementNumber.text = "\(source.number)"
         }
-        cell.elementView.elementNumber.text = "\(source.number)"
+        
 
         return cell
     }

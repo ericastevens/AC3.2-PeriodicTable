@@ -13,20 +13,18 @@ private let reuseIdentifier = "ElementCell"
 
 class PeriodicElementsCollectionViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
     
-    var elements = [Element]()
     var fetchedResultsController: NSFetchedResultsController<Element>!
-    let data = [("H", 1), ("He", 2), ("Li", 3)]
+    //let data = [("H", 1), ("He", 2), ("Li", 3)]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Register cell classes
         self.collectionView!.register(UINib(nibName:"ElementCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        
         getData()
-        
-        
+        initializeFetchResultsController()  
 
-        // Do any additional setup after loading the view.
     }
     
     func getData() {
@@ -74,47 +72,53 @@ class PeriodicElementsCollectionViewController: UICollectionViewController, NSFe
         }
     }
 
-    
-//    func initializeFetchResultsController() {
-//        let moc = (UIApplication.shared.delegate as! AppDelegate).dataController.managedObjectContext
-//        
-//        let request = NSFetchRequest<Element>(entityName: "Element")
-//    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func initializeFetchResultsController() {
+        let moc = (UIApplication.shared.delegate as! AppDelegate).dataController.managedObjectContext
+        
+        let request = NSFetchRequest<Element>(entityName: "Element")
+        
+        let sectionSort = NSSortDescriptor(key: "group", ascending: true)
+        let numberSort = NSSortDescriptor(key: "number", ascending: false)
+        request.sortDescriptors = [sectionSort, numberSort]
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: "group", cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        }
+        catch {
+            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        }
+
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        guard let sections = fetchedResultsController.sections else { return 0 }
+        return sections.count
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return data.count
+        guard let sections = fetchedResultsController.sections else {
+            fatalError("NO SECTIONS IN FETCHEDRESULTSCONTROLLER")
+        }
+        let sectionInfo = sections[section]
+        return sectionInfo.numberOfObjects
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ElementCollectionViewCell
-    
-        // Configure the cell
-        cell.elementView.elementSymbol.text = "\(data[indexPath.row].0)"
-        cell.elementView.elementNumber.text = "\(data[indexPath.row].1)"
+        
+        let source = fetchedResultsController.object(at: indexPath)
+        if let name = source.name {
+        cell.elementView.elementSymbol.text = "\(name)"
+        }
+        cell.elementView.elementNumber.text = "\(source.number)"
 
         return cell
     }

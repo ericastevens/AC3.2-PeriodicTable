@@ -7,24 +7,79 @@
 //
 
 import UIKit
+import CoreData
 
 private let reuseIdentifier = "ElementCell"
 
-class PeriodicElementsCollectionViewController: UICollectionViewController {
+class PeriodicElementsCollectionViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
     
+    var elements = [Element]()
+    var fetchedResultsController: NSFetchedResultsController<Element>!
     let data = [("H", 1), ("He", 2), ("Li", 3)]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
         // Register cell classes
         self.collectionView!.register(UINib(nibName:"ElementCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        getData()
+        
+        
 
         // Do any additional setup after loading the view.
     }
+    
+    func getData() {
+        APIRequestManager.manager.getData(endPoint: "https://api.fieldbook.com/v1/5859ad86d53164030048bae2/elements")  { (data: Data?) in
+            if let validData = data {
+                if let jsonData = try? JSONSerialization.jsonObject(with: validData, options:[]) {
+                    if let jsonArrOfDicts = jsonData as? [[String:Any]] {
+                        // used to be our way of adding a record
+                        // self.allArticles.append(contentsOf:Article.parseArticles(from: records))
+                        
+                        // create the private context on the thread that needs it
+                        let moc = (UIApplication.shared.delegate as! AppDelegate).dataController.privateContext
+                        
+                        moc.performAndWait {
+                            for dict in jsonArrOfDicts {
+                                let element = NSEntityDescription.insertNewObject(forEntityName: "Element", into: moc) as! Element
+
+                                element.populate(from: dict)
+                       
+                                dump(element)
+                            }
+                            do {
+                                try moc.save()
+                                
+                                moc.parent?.performAndWait {
+                                    do {
+                                        try moc.parent?.save()
+                                    }
+                                    catch {
+                                        fatalError("Failure to save context: \(error)")
+                                    }
+                                }
+                            }
+                            catch {
+                                fatalError("Failure to save context: \(error)")
+                            }
+                            
+                        }
+                        DispatchQueue.main.async {
+                            self.collectionView?.reloadData()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
+//    func initializeFetchResultsController() {
+//        let moc = (UIApplication.shared.delegate as! AppDelegate).dataController.managedObjectContext
+//        
+//        let request = NSFetchRequest<Element>(entityName: "Element")
+//    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -60,10 +115,7 @@ class PeriodicElementsCollectionViewController: UICollectionViewController {
         // Configure the cell
         cell.elementView.elementSymbol.text = "\(data[indexPath.row].0)"
         cell.elementView.elementNumber.text = "\(data[indexPath.row].1)"
-//        cell.elementSymbolString = "\(data[indexPath.row].0)"
-//        cell.elementNumberString = "\(data[indexPath.row].1)"
-        
-    
+
         return cell
     }
 

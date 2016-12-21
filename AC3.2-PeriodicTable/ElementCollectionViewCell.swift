@@ -11,17 +11,10 @@ import UIKit
 class ElementCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var elementView: ElementView!
-    
-//    var elementSymbolString = ""
-//    var elementNumberString = ""
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        
-//        self.elementView.elementSymbol.text = elementSymbolString
-//        
-//        self.elementView.elementNumber.text = elementNumberString
+
     }
 
 }

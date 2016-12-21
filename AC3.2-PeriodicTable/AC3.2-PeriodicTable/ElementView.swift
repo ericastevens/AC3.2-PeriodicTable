@@ -23,6 +23,7 @@ class ElementView: UIView {
         
         if let view = Bundle.main.loadNibNamed("ElementView", owner: self, options: nil)?.first as? UIView {
             self.addSubview(view)
+            view.backgroundColor = .clear
             view.frame = self.bounds
         }
     }

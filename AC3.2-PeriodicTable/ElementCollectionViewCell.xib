@@ -16,7 +16,6 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0WT-72-LpB" customClass="ElementView" customModule="AC3_2_PeriodicTable" customModuleProvider="target">
-                        <color key="backgroundColor" red="1" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="64" id="IDx-R1-pJc"/>
                             <constraint firstAttribute="height" constant="64" id="nWl-Za-wXk"/>

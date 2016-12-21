@@ -14,6 +14,8 @@
 		3AFEBB8B1E0ADBB10052CC3C /* ElementCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEBB891E0ADBB10052CC3C /* ElementCollectionViewCell.swift */; };
 		3AFEBB8C1E0ADBB10052CC3C /* ElementCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AFEBB8A1E0ADBB10052CC3C /* ElementCollectionViewCell.xib */; };
 		3AFEBB8E1E0ADBD70052CC3C /* PeriodicElementsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEBB8D1E0ADBD70052CC3C /* PeriodicElementsCollectionViewController.swift */; };
+		3AFEBB931E0ADE310052CC3C /* ElementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFEBB921E0ADE300052CC3C /* ElementView.swift */; };
+		3AFEBB951E0ADE450052CC3C /* ElementView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AFEBB941E0ADE450052CC3C /* ElementView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		3AFEBB891E0ADBB10052CC3C /* ElementCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ElementCollectionViewCell.swift; path = ../ElementCollectionViewCell.swift; sourceTree = "<group>"; };
 		3AFEBB8A1E0ADBB10052CC3C /* ElementCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ElementCollectionViewCell.xib; path = ../ElementCollectionViewCell.xib; sourceTree = "<group>"; };
 		3AFEBB8D1E0ADBD70052CC3C /* PeriodicElementsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PeriodicElementsCollectionViewController.swift; path = ../PeriodicElementsCollectionViewController.swift; sourceTree = "<group>"; };
+		3AFEBB921E0ADE300052CC3C /* ElementView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElementView.swift; sourceTree = "<group>"; };
+		3AFEBB941E0ADE450052CC3C /* ElementView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ElementView.xib; path = ../ElementView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +82,9 @@
 		3AFEBB901E0ADBFC0052CC3C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3AFEBB801E0ADB780052CC3C /* LaunchScreen.storyboard */,
 				3AFEBB7B1E0ADB780052CC3C /* Main.storyboard */,
+				3AFEBB941E0ADE450052CC3C /* ElementView.xib */,
+				3AFEBB801E0ADB780052CC3C /* LaunchScreen.storyboard */,
 				3AFEBB8A1E0ADBB10052CC3C /* ElementCollectionViewCell.xib */,
 			);
 			name = Views;
@@ -90,6 +95,7 @@
 			children = (
 				3AFEBB8D1E0ADBD70052CC3C /* PeriodicElementsCollectionViewController.swift */,
 				3AFEBB891E0ADBB10052CC3C /* ElementCollectionViewCell.swift */,
+				3AFEBB921E0ADE300052CC3C /* ElementView.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -157,6 +163,7 @@
 				3AFEBB7F1E0ADB780052CC3C /* Assets.xcassets in Resources */,
 				3AFEBB7D1E0ADB780052CC3C /* Main.storyboard in Resources */,
 				3AFEBB8C1E0ADBB10052CC3C /* ElementCollectionViewCell.xib in Resources */,
+				3AFEBB951E0ADE450052CC3C /* ElementView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,6 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AFEBB8E1E0ADBD70052CC3C /* PeriodicElementsCollectionViewController.swift in Sources */,
+				3AFEBB931E0ADE310052CC3C /* ElementView.swift in Sources */,
 				3AFEBB781E0ADB780052CC3C /* AppDelegate.swift in Sources */,
 				3AFEBB8B1E0ADBB10052CC3C /* ElementCollectionViewCell.swift in Sources */,
 			);

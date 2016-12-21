@@ -11,6 +11,8 @@ import UIKit
 private let reuseIdentifier = "ElementCell"
 
 class PeriodicElementsCollectionViewController: UICollectionViewController {
+    
+    let data = [("H", 1), ("He", 2), ("Li", 3)]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +21,7 @@ class PeriodicElementsCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(UINib(nibName:"ElementCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
     }
@@ -49,13 +51,18 @@ class PeriodicElementsCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 1
+        return data.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! ElementCollectionViewCell
     
         // Configure the cell
+        cell.elementView.elementSymbol.text = "\(data[indexPath.row].0)"
+        cell.elementView.elementNumber.text = "\(data[indexPath.row].1)"
+//        cell.elementSymbolString = "\(data[indexPath.row].0)"
+//        cell.elementNumberString = "\(data[indexPath.row].1)"
+        
     
         return cell
     }
